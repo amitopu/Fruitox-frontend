@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import auth from "../../firebase.init";
+import {
+    useAuthState,
+    useSendPasswordResetEmail,
+    useSignInWithEmailAndPassword,
+    useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Spinner from "../Spinner/Spinner";
 
 const Login = () => {
+    // for form data and validation
     const {
         register,
         handleSubmit,
@@ -13,13 +24,71 @@ const Login = () => {
         mode: "onBlur",
     });
 
-    const onSubmit = (data) => {
+    // sign in with email and pass hook
+    const [signInWithEmailAndPassword, , loading, error] =
+        useSignInWithEmailAndPassword(auth);
+
+    //sign in with google hook
+    const [signInWithGoogle, , updating, errorGoogle] =
+        useSignInWithGoogle(auth);
+    const [user] = useAuthState(auth);
+
+    // hooks and states for redirect to intended page
+    const navigate = useNavigate();
+    let location = useLocation();
+    let path = location.state?.from?.pathname || "/";
+
+    // for capturing emaill only for sending pass reset link
+    // const captureEmail = (event) => {
+    //     let email = event.target.value;
+    //     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    //         setEmail(email);
+    //     } else {
+    //         setEmail("");
+    //     }
+    // };
+
+    // handling submit data for login with email and pass
+    const onSubmit = async (data) => {
         const { email, password } = data;
+        await signInWithEmailAndPassword(email, password);
     };
+
+    // handle sign in with google
+    const googleSignIn = async () => {
+        await signInWithGoogle();
+    };
+
+    // handler for password reset
+    // password reset hook
+    // const [sendPasswordResetEmail, sending, errorReset] =
+    //     useSendPasswordResetEmail(auth);
+    // const [email, setEmail] = useState("");
+    // const resetPassword = () => {
+    //     if (email) {
+    //         sendPasswordResetEmail(email);
+    //         toast("Sending Password Reset Link");
+    //         console.log(email);
+    //     } else {
+    //         toast("Enter email please!!");
+    //     }
+    // };
+
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+            navigate(path, { replace: true });
+        }
+    }, [user, path, navigate]);
+
+    if (loading || updating) {
+        return <Spinner></Spinner>;
+    }
 
     return (
         <>
             <Header></Header>
+            <ToastContainer />
             <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Login ...
@@ -30,7 +99,7 @@ const Login = () => {
                     </label>
                     <br />
                     <input
-                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2"
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("email", {
                             pattern: {
                                 value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/i,
@@ -39,6 +108,7 @@ const Login = () => {
                             required: "this is required",
                             maxLength: 30,
                         })}
+                        // onBlur={captureEmail}
                     />
                     {errors.email && (
                         <p className="text-red-600 text-center warning mb-2">
@@ -51,7 +121,8 @@ const Login = () => {
                     </label>
                     <br />
                     <input
-                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2"
+                        type="password"
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("password", {
                             pattern: {
                                 value: /[0-9a-zA-Z@#$%&!]{6,}/i,
@@ -81,13 +152,29 @@ const Login = () => {
                         <Link to="/register">Register</Link>
                     </span>
                 </p>
+                <p className="mt-2 text-center text-xl">
+                    Or
+                    <span>
+                        <button
+                            className="text-orange-600 ml-2 font-bold"
+                            onClick={() => {
+                                navigate("/passwordreset");
+                            }}
+                        >
+                            Forgot Password
+                        </button>
+                    </span>
+                </p>
                 <div className="flex mx-auto justify-center items-center mt-5">
                     <div className="w-2/5 h-[2px] bg-orange-600"></div>
                     <div className="w-2 h-2 rounded-full bg-orange-600 mx-1"></div>
                     <div className="w-2/5 h-[2px] bg-orange-600"></div>
                 </div>
                 {/* google sign in button */}
-                <button className="flex justify-center items-center mx-auto mt-5 text-center w-3/4 md:w-5/7 lg:w-1/2 h-10 border-[2px] border-orange-600 rounded mb-3">
+                <button
+                    className="flex justify-center items-center mx-auto mt-5 text-center w-3/4 md:w-5/7 lg:w-1/2 h-10 border-[2px] border-orange-600 rounded mb-3"
+                    onClick={googleSignIn}
+                >
                     <span>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -117,6 +204,13 @@ const Login = () => {
                     </span>
                     <span>SignIn With Google</span>
                 </button>
+                {/* Showing error messages */}
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {error?.message}
+                </p>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {errorGoogle?.message}
+                </p>
             </div>
         </>
     );

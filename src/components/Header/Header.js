@@ -71,11 +71,7 @@ const Header = () => {
                         <Link to="/">Home</Link>
                     </div>
                     <div className="mx-auto md:mr-5 font-bold text-black hover:font-extrabold  w-40 md:w-auto">
-                        {user ? (
-                            <Link to="/manageinventory">Manage Inventory</Link>
-                        ) : (
-                            ""
-                        )}
+                        {user ? <Link to="/myitems">My Items</Link> : ""}
                     </div>
                     <div className="mx-auto md:mr-5 font-bold text-black hover:font-extrabold  w-40 md:w-auto">
                         <Link to="/blog">Blog</Link>

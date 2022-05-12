@@ -1,9 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
+import {
+    useCreateUserWithEmailAndPassword,
+    useAuthState,
+    useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import Spinner from "../Spinner/Spinner";
 
 const Register = () => {
+    const navigate = useNavigate();
+    const [createUserWithEmailAndPassword, , loading, error] =
+        useCreateUserWithEmailAndPassword(auth, {
+            sendEmailVerification: true,
+        });
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const [user] = useAuthState(auth);
+
     const {
         register,
         handleSubmit,
@@ -13,14 +28,30 @@ const Register = () => {
         mode: "onBlur",
     });
 
-    const onSubmit = (data) => {
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+            navigate("/");
+        }
+    }, [navigate, user]);
+
+    if (loading || updating) {
+        return <Spinner></Spinner>;
+    }
+
+    // handling submit data
+    const onSubmit = async (data) => {
         console.log(data);
+        const { fullName, email, password } = data;
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName: fullName });
     };
 
     return (
         <>
             <Header></Header>
-            <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
+
+            <div className="relative md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Register with Credentials ...
                 </h1>
@@ -32,7 +63,7 @@ const Register = () => {
                     </label>
                     <br />
                     <input
-                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2"
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("fullName", {
                             required: "this is required",
                             maxLength: {
@@ -54,10 +85,10 @@ const Register = () => {
                     </label>
                     <br />
                     <input
-                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2"
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("email", {
                             pattern: {
-                                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/i,
+                                value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,5})+$/i,
                                 message: "Invalid email address",
                             },
                             required: "this is required",
@@ -76,7 +107,8 @@ const Register = () => {
                     </label>
                     <br />
                     <input
-                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2"
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
+                        type="password"
                         {...register("password", {
                             pattern: {
                                 value: /[0-9a-zA-Z@#$%&!]{6,}/i,
@@ -105,6 +137,12 @@ const Register = () => {
                     <span className="font-bold text-orange-600">
                         <Link to="/login">Login</Link>
                     </span>
+                </p>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {error?.message}
+                </p>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {updateError?.message}
                 </p>
             </div>
         </>
