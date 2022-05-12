@@ -12,8 +12,8 @@ const Freight = () => {
                     frigo truck.
                 </p>
             </div>
-            <div className="w-auto flex">
-                <div className="freight-left w-0"></div>
+            <div className="w-auto realtive">
+                <div className="freight-left w-0 h-0 absolute top-0 left-[50%]"></div>
                 <img
                     className="freight-img w-full h-[300px] rounded-r-2xl"
                     src="images/freight.jpg"
