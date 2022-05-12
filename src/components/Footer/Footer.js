@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-4 relative bg-[#061621] pt-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 relative bg-[#061621] pt-10 text-center">
             <div className="mt-5">
-                <h1 className="font-Macondo text-3xl text-slate-300 italic">
+                <h1 className="font-Macondo text-3xl text-slate-300 italic text-center">
                     Fruitox
                 </h1>
             </div>
@@ -121,7 +121,7 @@ const Footer = () => {
                     </li>
                 </ul>
             </div>
-            <div className="absolute bottom-5 left-16">
+            <div className="absolute bottom-5 left-20">
                 <p className="text-sm text-slate-300">
                     © 2022, <span className="font-Macondo italic">Fruitox</span>
                     , Inc

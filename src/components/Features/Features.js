@@ -2,7 +2,7 @@ import React from "react";
 
 const Features = () => {
     return (
-        <div className="p-4 lg:px-16 md:px-8 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 my-8">
+        <div className=" text-center p-4 lg:px-16 md:px-8 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 my-8">
             <div className="w-auto my-5 mx-auto">
                 <img
                     src="images/food-safety.png"

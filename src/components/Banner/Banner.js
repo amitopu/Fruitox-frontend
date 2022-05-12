@@ -11,7 +11,7 @@ const Banner = () => {
 
     return (
         <div>
-            <div className="mx-auto p-4 lg:px-16 md:px-8">
+            <div className="text-center mx-auto p-4 lg:px-16 md:px-8">
                 <div className="bg-gray-900 rounded-2xl relative h-auto">
                     <img
                         id="banner-img"
