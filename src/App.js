@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import About from "./components/About/About";
+import Additems from "./components/AddItems/Additems";
 import Blog from "./components/Blog/Blog";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
@@ -21,6 +22,7 @@ function App() {
                     path="/passwordreset"
                     element={<PasswordReset></PasswordReset>}
                 ></Route>
+                <Route path="/additems" element={<Additems></Additems>}></Route>
             </Routes>
         </div>
     );
