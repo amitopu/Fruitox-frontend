@@ -4,9 +4,12 @@ import About from "./components/About/About";
 import Additems from "./components/AddItems/Additems";
 import Blog from "./components/Blog/Blog";
 import Home from "./components/Home/Home";
+import Inventory from "./components/Inventory/Inventory";
 import Login from "./components/Login/Login";
+import ManageInventory from "./components/ManageInventory/ManageInventory";
 import PasswordReset from "./components/PasswordReset/PasswordReset";
 import Register from "./components/Register/Register";
+import RequireAuth from "./components/RequireAuth/RequireAuth";
 import UpdateItems from "./components/UpdateItems/UpdateItems";
 
 function App() {
@@ -23,10 +26,37 @@ function App() {
                     path="/passwordreset"
                     element={<PasswordReset></PasswordReset>}
                 ></Route>
-                <Route path="/additems" element={<Additems></Additems>}></Route>
+                <Route
+                    path="/additems"
+                    element={
+                        <RequireAuth>
+                            <Additems></Additems>
+                        </RequireAuth>
+                    }
+                ></Route>
                 <Route
                     path="/updateitems/:id"
-                    element={<UpdateItems></UpdateItems>}
+                    element={
+                        <RequireAuth>
+                            <UpdateItems></UpdateItems>
+                        </RequireAuth>
+                    }
+                ></Route>
+                <Route
+                    path="inventory/:id"
+                    element={
+                        <RequireAuth>
+                            <Inventory></Inventory>
+                        </RequireAuth>
+                    }
+                ></Route>
+                <Route
+                    path="manageinventory"
+                    element={
+                        <RequireAuth>
+                            <ManageInventory></ManageInventory>
+                        </RequireAuth>
+                    }
                 ></Route>
             </Routes>
         </div>

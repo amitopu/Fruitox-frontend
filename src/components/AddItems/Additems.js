@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import AddSingleItem from "../../scripts/AddItem";
+import { useNavigate } from "react-router-dom";
 
 const Additems = () => {
+    const [addError, setAddError] = useState(false);
+    const [loading, setLoading] = useState(false);
     // hook for form control
     const {
         register,
@@ -14,9 +18,20 @@ const Additems = () => {
         mode: "onChange",
     });
 
+    const navigate = useNavigate();
+
     // for handling form submit
     const onSubmit = (data) => {
+        setAddError(false);
+        setLoading(true);
         console.log(data);
+        const result = AddSingleItem(data);
+        if (result.acknowledged) {
+            navigate(`/inventory/${result.insertedId}`);
+        } else {
+            setAddError(true);
+            setLoading(false);
+        }
     };
     return (
         <>
@@ -179,6 +194,12 @@ const Additems = () => {
                     />
                     <br />
                 </form>
+
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {addError
+                        ? "Something went wrong!! Please try again later"
+                        : ""}
+                </p>
             </div>
             <Footer></Footer>
         </>
