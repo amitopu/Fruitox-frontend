@@ -9,6 +9,7 @@ import {
     useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import Spinner from "../Spinner/Spinner";
+import Footer from "../Footer/Footer";
 
 const Login = () => {
     // for form data and validation
@@ -87,7 +88,7 @@ const Login = () => {
     return (
         <>
             <Header></Header>
-            <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
+            <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Login ...
                 </h1>
@@ -218,6 +219,7 @@ const Login = () => {
                     {errorGoogle?.message}
                 </p>
             </div>
+            <Footer></Footer>
         </>
     );
 };

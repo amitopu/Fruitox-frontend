@@ -2,8 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { useParams } from "react-router-dom";
 
-const Additems = () => {
+const UpdateItems = () => {
+    const id = useParams();
+    console.log(id);
     // hook for form control
     const {
         register,
@@ -172,7 +175,7 @@ const Additems = () => {
                     {/* input for submit */}
                     <input
                         className="block border-2 text-white font-bold hover:font-extrabold bg-orange-600 hover:bg-orange-700 w-4/5 h-10 rounded-md mx-auto mt-3 mb-3"
-                        value="Add Items"
+                        value="Update Items"
                         type="submit"
                     />
                     <br />
@@ -183,4 +186,4 @@ const Additems = () => {
     );
 };
 
-export default Additems;
+export default UpdateItems;

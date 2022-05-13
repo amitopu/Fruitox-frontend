@@ -5,6 +5,7 @@ import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../Footer/Footer";
 
 const PasswordReset = () => {
     // hook call for form control
@@ -32,7 +33,7 @@ const PasswordReset = () => {
         <>
             <Header></Header>
             <ToastContainer></ToastContainer>
-            <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
+            <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Enter Email To Reset Password...
                 </h1>
@@ -73,6 +74,7 @@ const PasswordReset = () => {
                     </p>
                 </form>
             </div>
+            <Footer></Footer>
         </>
     );
 };

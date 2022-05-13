@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import PasswordReset from "./components/PasswordReset/PasswordReset";
 import Register from "./components/Register/Register";
+import UpdateItems from "./components/UpdateItems/UpdateItems";
 
 function App() {
     return (
@@ -23,6 +24,10 @@ function App() {
                     element={<PasswordReset></PasswordReset>}
                 ></Route>
                 <Route path="/additems" element={<Additems></Additems>}></Route>
+                <Route
+                    path="/updateitems/:id"
+                    element={<UpdateItems></UpdateItems>}
+                ></Route>
             </Routes>
         </div>
     );

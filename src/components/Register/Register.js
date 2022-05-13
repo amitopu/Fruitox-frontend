@@ -9,6 +9,7 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import Spinner from "../Spinner/Spinner";
+import Footer from "../Footer/Footer";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Register = () => {
         <>
             <Header></Header>
 
-            <div className="relative md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
+            <div className="relative md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Register with Credentials ...
                 </h1>
@@ -149,6 +150,7 @@ const Register = () => {
                     {updateError?.message}
                 </p>
             </div>
+            <Footer></Footer>
         </>
     );
 };

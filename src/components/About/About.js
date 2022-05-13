@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 
 const About = () => {
@@ -6,6 +7,7 @@ const About = () => {
         <div>
             <Header></Header>
             <p>Welcome to about page</p>
+            <Footer></Footer>
         </div>
     );
 };
