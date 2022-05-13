@@ -11,7 +11,7 @@ const Additems = () => {
         watch,
         formState: { errors },
     } = useForm({
-        mode: "onBlur",
+        mode: "onChange",
     });
 
     // for handling form submit
@@ -80,7 +80,7 @@ const Additems = () => {
                         Image Url
                     </label>
                     <br />
-                    {/* input for email  */}
+
                     <input
                         className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("imageurl", {
@@ -95,11 +95,13 @@ const Additems = () => {
                             {errors.imageurl.message}
                         </p>
                     )}
+
+                    {/* input for price  */}
                     <label className="text-xl ml-[11%]" htmlFor="email">
                         Price/Unit
                     </label>
                     <br />
-                    {/* input for email  */}
+
                     <input
                         className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("price", {
@@ -107,7 +109,7 @@ const Additems = () => {
                             pattern: {
                                 value: /^(?!0\d)\d*(\.\d+)?$/,
                                 message:
-                                    "price should be non negative float or integer",
+                                    "price should be positive integer or decimal number",
                             },
                         })}
                     />
@@ -124,7 +126,7 @@ const Additems = () => {
                                 Quantity
                             </label>
                             <br />
-                            {/* input for email  */}
+
                             <input
                                 type="number"
                                 className="border-2 border-orange-600 w-full h-10 rounded-md mx-auto mb-2 pl-3"
@@ -149,7 +151,7 @@ const Additems = () => {
                                 Unit
                             </label>
                             <br />
-                            {/* input for email  */}
+
                             <select
                                 className="border-2 border-orange-600 w-full h-10 rounded-md mx-auto mb-2 pl-3"
                                 {...register("unit", {
@@ -157,7 +159,7 @@ const Additems = () => {
                                 })}
                             >
                                 <option value="unit">units</option>
-                                <option value="ton">tonnes</option>
+                                <option value="tonne">tonnes</option>
                                 <option value="kg">kilograms</option>
                                 <option value="box">box</option>
                             </select>
