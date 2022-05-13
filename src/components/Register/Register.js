@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
@@ -124,6 +124,7 @@ const Register = () => {
                         </p>
                     )}
 
+                    {/* input for submit */}
                     <input
                         className="block border-2 text-white font-bold hover:font-extrabold bg-orange-600 hover:bg-orange-700 w-4/5 h-10 rounded-md mx-auto mt-3 mb-3"
                         value="Submit"
@@ -132,12 +133,15 @@ const Register = () => {
                     <br />
                 </form>
 
+                {/* for extra link */}
                 <p className="text-xl text-center">
                     Already have an account?{" "}
                     <span className="font-bold text-orange-600">
                         <Link to="/login">Login</Link>
                     </span>
                 </p>
+
+                {/* for showing error messages  */}
                 <p className="mt-2 text-center text-red-600 ml-2 font-bold">
                     {error?.message}
                 </p>

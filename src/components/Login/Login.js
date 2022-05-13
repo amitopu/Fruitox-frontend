@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import {
     useAuthState,
-    useSendPasswordResetEmail,
     useSignInWithEmailAndPassword,
     useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Spinner from "../Spinner/Spinner";
 
 const Login = () => {
@@ -31,9 +28,11 @@ const Login = () => {
     //sign in with google hook
     const [signInWithGoogle, , updating, errorGoogle] =
         useSignInWithGoogle(auth);
+
+    // hook for getting user object
     const [user] = useAuthState(auth);
 
-    // hooks and states for redirect to intended page
+    // hooks and states to get regirection location of intended page
     const navigate = useNavigate();
     let location = useLocation();
     let path = location.state?.from?.pathname || "/";
@@ -88,7 +87,6 @@ const Login = () => {
     return (
         <>
             <Header></Header>
-            <ToastContainer />
             <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Login ...
@@ -98,6 +96,8 @@ const Login = () => {
                         Email
                     </label>
                     <br />
+
+                    {/* input for email  */}
                     <input
                         className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
                         {...register("email", {
@@ -120,6 +120,8 @@ const Login = () => {
                         Password
                     </label>
                     <br />
+
+                    {/* input for password  */}
                     <input
                         type="password"
                         className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
@@ -138,6 +140,7 @@ const Login = () => {
                         </p>
                     )}
 
+                    {/* input for submit */}
                     <input
                         className="block border-2 text-white font-bold hover:font-extrabold bg-orange-600 hover:bg-orange-700 w-4/5 h-10 rounded-md mx-auto mt-3 mb-3"
                         value="Submit"
@@ -146,6 +149,7 @@ const Login = () => {
                     <br />
                 </form>
 
+                {/* extra links  */}
                 <p className="text-xl text-center">
                     Don't have an account?{" "}
                     <span className="font-bold text-orange-600">
@@ -170,6 +174,7 @@ const Login = () => {
                     <div className="w-2 h-2 rounded-full bg-orange-600 mx-1"></div>
                     <div className="w-2/5 h-[2px] bg-orange-600"></div>
                 </div>
+
                 {/* google sign in button */}
                 <button
                     className="flex justify-center items-center mx-auto mt-5 text-center w-3/4 md:w-5/7 lg:w-1/2 h-10 border-[2px] border-orange-600 rounded mb-3"
@@ -204,6 +209,7 @@ const Login = () => {
                     </span>
                     <span>SignIn With Google</span>
                 </button>
+
                 {/* Showing error messages */}
                 <p className="mt-2 text-center text-red-600 ml-2 font-bold">
                     {error?.message}
