@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import AddSingleItem from "../../scripts/AddItem";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
+import useAddSingleItem from "../../Hooks/useAddSingleItem";
 
 const Additems = () => {
     const [addError, setAddError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [item, setItem] = useState({});
+    const result = useAddSingleItem(item);
     // hook for form control
     const {
         register,
@@ -20,19 +23,33 @@ const Additems = () => {
 
     const navigate = useNavigate();
 
-    // for handling form submit
-    const onSubmit = (data) => {
-        setAddError(false);
-        setLoading(true);
-        console.log(data);
-        const result = AddSingleItem(data);
+    useEffect(() => {
         if (result.acknowledged) {
             navigate(`/inventory/${result.insertedId}`);
+        } else if (Object.keys(result).length === 0) {
+            console.log("second");
+            setAddError(false);
+            setLoading(false);
         } else {
+            console.log("third");
             setAddError(true);
             setLoading(false);
         }
+    }, [result, navigate]);
+
+    // for spinner
+    if (loading) {
+        console.log(loading);
+    }
+
+    // for handling form submit
+    const onSubmit = (data) => {
+        setItem(data);
+        setAddError(false);
+        console.log(item);
+        setLoading(true);
     };
+
     return (
         <>
             <Header></Header>
@@ -63,6 +80,32 @@ const Additems = () => {
                     {errors.itemName && (
                         <p className="text-red-600 text-center warning mb-2">
                             {errors.itemName.message}
+                        </p>
+                    )}
+
+                    {/* input for supplier Name  */}
+                    <label className="text-xl ml-[11%]" htmlFor="email">
+                        Supplier Name
+                    </label>
+                    <br />
+
+                    <input
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
+                        {...register("supplierName", {
+                            required: "this is required",
+                            maxLength: {
+                                value: 50,
+                                message: "Should be less than 50 chars.",
+                            },
+                            minLength: {
+                                value: 4,
+                                message: "Must be at least 4 chars. long",
+                            },
+                        })}
+                    />
+                    {errors.supplierName && (
+                        <p className="text-red-600 text-center warning mb-2">
+                            {errors.supplierName.message}
                         </p>
                     )}
 

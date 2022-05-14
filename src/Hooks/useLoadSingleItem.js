@@ -5,10 +5,12 @@ const useLoadSingleItem = (id) => {
     useEffect(() => {
         fetch(`http://localhost:5000/inventory/${id}`)
             .then((res) => res.json())
-            .then((data) => setItem(data));
+            .then((data) => {
+                setItem(data);
+            });
     }, [id]);
 
-    return item;
+    return [item];
 };
 
 export default useLoadSingleItem;

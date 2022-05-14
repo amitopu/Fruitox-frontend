@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 const useLoadItems = () => {
     const [items, setItems] = useState([]);
-
     useEffect(() => {
         fetch("http://localhost:5000/items")
             .then((res) => res.json())

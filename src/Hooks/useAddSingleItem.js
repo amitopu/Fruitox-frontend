@@ -2,32 +2,31 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 
-const AddSingleItem = (item) => {
+const useAddSingleItem = (item) => {
     const [result, setResult] = useState({});
     const [user] = useAuthState(auth);
-    const supplierName = user.displayName;
     const sold = 0;
 
     useEffect(() => {
-        if (user) {
-            const data = { ...item, supplierName, sold };
+        if (user && Object.keys(item).length !== 0) {
+            const newItem = { ...item, sold };
             fetch("http://localhost:5000/additem", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(newItem),
             })
                 .then((res) => res.json())
                 .then((info) => {
-                    if (info.acknowledged) {
+                    if (info) {
                         setResult(info);
                     }
                 });
         }
-    }, [item, supplierName, user]);
+    }, [item, user]);
 
     return result;
 };
 
-export default AddSingleItem;
+export default useAddSingleItem;

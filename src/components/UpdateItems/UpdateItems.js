@@ -54,6 +54,32 @@ const UpdateItems = () => {
                         </p>
                     )}
 
+                    {/* input for supplier Name  */}
+                    <label className="text-xl ml-[11%]" htmlFor="email">
+                        Supplier Name
+                    </label>
+                    <br />
+
+                    <input
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
+                        {...register("supplierName", {
+                            required: "this is required",
+                            maxLength: {
+                                value: 50,
+                                message: "Should be less than 50 chars.",
+                            },
+                            minLength: {
+                                value: 4,
+                                message: "Must be at least 4 chars. long",
+                            },
+                        })}
+                    />
+                    {errors.supplierName && (
+                        <p className="text-red-600 text-center warning mb-2">
+                            {errors.supplierName.message}
+                        </p>
+                    )}
+
                     {/* for description  */}
                     <label className="text-xl ml-[11%]" htmlFor="email">
                         Description

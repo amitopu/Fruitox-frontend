@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useLoadSingleItem from "../../scripts/Hooks/loadSingleItem";
+import useLoadSingleItem from "../../Hooks/useLoadSingleItem";
 
 const Inventory = () => {
     const { id } = useParams();
-    const item = useLoadSingleItem(id);
+    const [article] = useLoadSingleItem(id);
+
+    const { status } = article;
+    console.log(status);
     const navigate = useNavigate();
     return (
         <div>
-            <p>{item.itemName}</p>
-            <p>{item.price}</p>
+            <p>{article.status}</p>
             <button
                 onClick={() => {
                     navigate("/manageinventory");
