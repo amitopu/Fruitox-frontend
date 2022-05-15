@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useLoadSingleItem from "../../Hooks/useLoadSingleItem";
+
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 
 const Inventory = () => {
     const { id } = useParams();
     const [item] = useLoadSingleItem(id);
-    const [error, setError] = useState();
+    const [stockFormError, setStockFormError] = useState(false);
+    const [addToStockError, setAddToStockError] = useState(false);
     const [deliveryError, setDeliveryError] = useState(false);
     const navigate = useNavigate();
+
     const {
         _id,
         itemName,
@@ -22,6 +25,7 @@ const Inventory = () => {
         imageurl,
         description,
     } = item;
+
     // handler for add item
     const handleAddItems = () => {
         navigate("/additems");
@@ -31,7 +35,7 @@ const Inventory = () => {
         navigate("/manageinventory");
     };
 
-    const handleDelivered = (_id) => {
+    const handleDelivered = (id) => {
         // reduce qunatity by one
         const newSold = parseInt(sold) + 1;
         const newQuantity = parseInt(quantity) - 1;
@@ -39,22 +43,48 @@ const Inventory = () => {
             sold: newSold,
             quantity: newQuantity,
         };
+        const url = `http://localhost:5000/delivered/${_id}`;
         if (newQuantity >= 0) {
-            axios
-                .put(`http://localhost:5000/delivered/${id}`, data)
-                .then((res) => {
-                    if (res.data.acknowledged && res.data.upsertedId) {
-                        setError(false);
-                        navigate(`/inventory/${res.data.upsertedId}`);
-                    } else if (res.data.acknowledged) {
-                        setError(false);
-                        navigate(`/inventory/${id}`);
-                    } else {
-                        setError(true);
-                    }
-                });
+            axios.put(url, data).then((res) => {
+                if (res.data.acknowledged && res.data.upsertedId) {
+                    setDeliveryError(false);
+                    navigate(0);
+                } else if (res.data.acknowledged) {
+                    setDeliveryError(false);
+                    navigate(0);
+                } else {
+                    setDeliveryError(true);
+                }
+            });
+        }
+    };
+
+    // handler for adding to stock
+    const handleAddToStock = (event) => {
+        event.preventDefault();
+        const newStock = parseInt(event.target.restock.value);
+        const url = `http://localhost:5000/delivered/${_id}`;
+        if (newStock <= 0) {
+            setStockFormError(true);
         } else {
-            setDeliveryError(true);
+            setStockFormError(false);
+            const updatedStock = parseInt(quantity) + newStock;
+            axios.put(url, { quantity: updatedStock }).then((res) => {
+                if (res.data.acknowledged && res.data.upsertedId) {
+                    console.log(res.data.upsertedId, "first");
+                    setAddToStockError(false);
+                    // navigate(`/inventory/${res.data.upsertedId}`);
+                    navigate(0);
+                } else if (res.data.acknowledged) {
+                    console.log(res.data.acknowledged, "second");
+                    setAddToStockError(false);
+                    // navigate(`/inventory/${_id}`);
+                    navigate(0);
+                } else {
+                    console.log("third");
+                    setAddToStockError(true);
+                }
+            });
         }
     };
 
@@ -94,6 +124,28 @@ const Inventory = () => {
                     >
                         Update Item
                     </button>
+
+                    {/* for add items to stock */}
+                    <form onSubmit={handleAddToStock}>
+                        <input
+                            type="number"
+                            name="restock"
+                            className="border-2 border-orange-600 w-full h-10 rounded-md mx-auto mb-2 pl-3"
+                            placeholder="Enter quantity to add"
+                        />
+                        <input
+                            type="submit"
+                            name="submit"
+                            value="Add to stock"
+                            className="w-full h-[40px] text-2xl bg-orange-600 text-white hover:bg-orange-700 hover:font-bold rounded-md mb-3"
+                        />
+                        <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                            {stockFormError ? "Enter positive number" : ""}
+                        </p>
+                        <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                            {addToStockError ? "Enter positive number" : ""}
+                        </p>
+                    </form>
                 </div>
 
                 {/* infor section  */}
@@ -134,14 +186,19 @@ const Inventory = () => {
                             <p className="text-xl ml-5 my-2">
                                 Initial Stock:{" "}
                                 <span className="font-semibold">
-                                    {quantity}
+                                    {quantity} {unit}
                                 </span>
                             </p>
-                            <p className="text-xl ml-5 my-2">Sold: {sold}</p>
+                            <p className="text-xl ml-5 my-2">
+                                Sold:{" "}
+                                <span className="font-semibold">
+                                    {sold} {unit}
+                                </span>
+                            </p>
                             <p className="text-xl ml-5 my-2">
                                 Remaining Stock:{" "}
                                 <span className="font-semibold">
-                                    {parseInt(quantity) - parseInt(sold)}
+                                    {quantity} {unit}
                                 </span>
                             </p>
                         </div>
@@ -156,8 +213,8 @@ const Inventory = () => {
                     </div>
                 </div>
                 <p className="mt-2 text-center text-red-600 ml-2 font-bold">
-                    {error
-                        ? "Something went wrong!! Please try again later"
+                    {deliveryError
+                        ? "Product not delivered!! Please try again later"
                         : ""}
                 </p>
             </div>
