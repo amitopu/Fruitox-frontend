@@ -53,6 +53,7 @@ const Additems = () => {
     return (
         <>
             <Header></Header>
+            {console.log("render")}
             <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Please Enter Item Details...
@@ -84,7 +85,7 @@ const Additems = () => {
                     )}
 
                     {/* input for supplier Name  */}
-                    <label className="text-xl ml-[11%]" htmlFor="email">
+                    {/* <label className="text-xl ml-[11%]" htmlFor="email">
                         Supplier Name
                     </label>
                     <br />
@@ -107,7 +108,7 @@ const Additems = () => {
                         <p className="text-red-600 text-center warning mb-2">
                             {errors.supplierName.message}
                         </p>
-                    )}
+                    )} */}
 
                     {/* for description  */}
                     <label className="text-xl ml-[11%]" htmlFor="email">

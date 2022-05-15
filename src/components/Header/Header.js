@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import auth from "../../firebase.init";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { userContext } from "../../App";
 
 const Header = () => {
     const [toggle, setToggle] = useState(false);
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useContext(userContext);
 
     // for menue button toggle
     const manageToggle = () => {

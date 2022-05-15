@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { createContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ const Login = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm({
         mode: "onBlur",

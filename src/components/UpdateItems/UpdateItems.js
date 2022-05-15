@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useLoadSingleItem from "../../Hooks/useLoadSingleItem";
+import axios from "axios";
 
 const UpdateItems = () => {
     const { id } = useParams();
     console.log(id);
-    // hook for form control
+    const navigate = useNavigate();
+    const [item] = useLoadSingleItem(id);
+    const [error, setError] = useState(false);
+    const {
+        _id,
+        itemName,
+        price,
+        supplierName,
+        sold,
+        unit,
+        quantity,
+        imageurl,
+        description,
+    } = item;
     const {
         register,
         handleSubmit,
@@ -20,6 +35,17 @@ const UpdateItems = () => {
     // for handling form submit
     const onSubmit = (data) => {
         console.log(data);
+        axios.put(`http://localhost:5000/item/${id}`, data).then((res) => {
+            if (res.data.acknowledged && res.data.upsertedId) {
+                setError(false);
+                navigate(`/inventory/${res.data.upsertedId}`);
+            } else if (res.data.acknowledged) {
+                setError(false);
+                navigate(`/inventory/${id}`);
+            } else {
+                setError(true);
+            }
+        });
     };
     return (
         <>
@@ -47,6 +73,7 @@ const UpdateItems = () => {
                                 message: "Must be at least 2 chars. long",
                             },
                         })}
+                        placeholder={itemName}
                     />
                     {errors.itemName && (
                         <p className="text-red-600 text-center warning mb-2">
@@ -73,6 +100,7 @@ const UpdateItems = () => {
                                 message: "Must be at least 4 chars. long",
                             },
                         })}
+                        placeholder={`${supplierName}`}
                     />
                     {errors.supplierName && (
                         <p className="text-red-600 text-center warning mb-2">
@@ -98,6 +126,7 @@ const UpdateItems = () => {
                                 message: "Must be at least 30 chars. long",
                             },
                         })}
+                        placeholder={description}
                     />
                     {errors.description && (
                         <p className="text-red-600 text-center warning mb-2">
@@ -118,6 +147,7 @@ const UpdateItems = () => {
                                 message: "Must be at least 2 chars. long",
                             },
                         })}
+                        placeholder={imageurl}
                     />
                     {errors.imageurl && (
                         <p className="text-red-600 text-center warning mb-2">
@@ -141,6 +171,7 @@ const UpdateItems = () => {
                                     "price should be positive integer or decimal number",
                             },
                         })}
+                        placeholder={price}
                     />
                     {errors.price && (
                         <p className="text-red-600 text-center warning mb-2">
@@ -167,6 +198,7 @@ const UpdateItems = () => {
                                             "Quantity should not be negative",
                                     },
                                 })}
+                                placeholder={parseInt(quantity)}
                             />
                             {errors.quantity && (
                                 <p className="text-red-600 text-center warning mb-2">
@@ -200,6 +232,31 @@ const UpdateItems = () => {
                         )} */}
                     </div>
 
+                    {/* input for sold */}
+                    <label className="text-xl ml-[11%]" htmlFor="email">
+                        Sold
+                    </label>
+                    <br />
+
+                    <input
+                        type="number"
+                        className="block border-2 border-orange-600 w-4/5 h-10 rounded-md mx-auto mb-2 pl-3"
+                        {...register("sold", {
+                            required: "this is required",
+                            pattern: {
+                                value: /^[01-9]\d*/,
+                                message:
+                                    "sold should not be negative and should not be greater than qauntity",
+                            },
+                        })}
+                        placeholder={sold}
+                    />
+                    {errors.sold && (
+                        <p className="text-red-600 text-center warning mb-2">
+                            {errors.sold.message}
+                        </p>
+                    )}
+
                     {/* input for submit */}
                     <input
                         className="block border-2 text-white font-bold hover:font-extrabold bg-orange-600 hover:bg-orange-700 w-4/5 h-10 rounded-md mx-auto mt-3 mb-3"
@@ -208,6 +265,11 @@ const UpdateItems = () => {
                     />
                     <br />
                 </form>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {error
+                        ? "Something went wrong!! Please try again later"
+                        : ""}
+                </p>
             </div>
             <Footer></Footer>
         </>

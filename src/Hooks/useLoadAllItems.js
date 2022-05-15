@@ -1,11 +1,12 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-
 const useLoadItems = () => {
     const [items, setItems] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:5000/items")
-            .then((res) => res.json())
-            .then((data) => setItems(data));
+        axios.get("http://localhost:5000/items").then((res) => {
+            console.log("called");
+            setItems(res.data);
+        });
     }, []);
 
     return items;
