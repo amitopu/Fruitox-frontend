@@ -154,7 +154,7 @@ const Inventory = () => {
                     <div className="w-auto mx-auto my-3">
                         <img
                             className="h-[200px] w-[200px] rounded-md border-2 border-orange-600"
-                            src={`${imageurl}`}
+                            src={imageurl}
                             alt=""
                         />
                         <p className="text-xl my-2">Item Id: {_id}</p>
