@@ -14,7 +14,7 @@ const useLoadSingleItem = (index) => {
         }
     }, [id, index]);
 
-    return [item];
+    return item;
 };
 
 export default useLoadSingleItem;

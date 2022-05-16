@@ -4,12 +4,11 @@ const useLoadItems = () => {
     const [items, setItems] = useState([]);
     useEffect(() => {
         axios.get("http://localhost:5000/items").then((res) => {
-            console.log("called");
             setItems(res.data);
         });
     }, []);
 
-    return items;
+    return [items];
 };
 
 export default useLoadItems;

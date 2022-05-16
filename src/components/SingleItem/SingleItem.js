@@ -1,12 +1,77 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../../App";
 
 const SingleItem = (props) => {
-    const { itemName, price, quantity } = props.item;
+    const {
+        _id,
+        itemName,
+        price,
+        supplierName,
+        quantity,
+        imageurl,
+        unit,
+        description,
+    } = props.item;
+    const [user] = useContext(userContext);
+    const [error, setError] = useState(false);
+    const navigate = useNavigate();
+    // for handling delete button
+    const handleDelete = (_id) => {
+        if (user.displayName === supplierName) {
+            if (window.confirm("Do you really want to delete?")) {
+                axios
+                    .delete(`http://localhost:5000/delete/${_id}`)
+                    .then((res) => {
+                        if (res.deleted) {
+                            navigate(0);
+                        } else {
+                            setError(true);
+                        }
+                    });
+            }
+        } else {
+            window.alert("Sorry!!! You are not the author of this item");
+        }
+    };
+
     return (
-        <div>
-            <p>{itemName}</p>
-            <p>{price}</p>
-            <p>{quantity}</p>
+        <div className="border-2 border-orange-600  rounded-lg">
+            <div className="h-auto w-[100px] rounded-md border-orange-600 border-2 mx-auto m-3">
+                <img
+                    className="h-[100px] w-[100px]  rounded-md"
+                    src={imageurl}
+                    alt=""
+                />
+            </div>
+            <p className="text-xl text-center my-2">Name: {itemName}</p>
+            <p className="text-xl text-center my-2">
+                Price: {price}$/{unit}
+            </p>
+            <p className="text-xl text-center my-2">
+                Current stock: {quantity}
+            </p>
+            <p className="text-xl text-center my-2">
+                Description: {`${description.slice(0, 101)}...`}
+            </p>
+            <div className="">
+                <button
+                    onClick={() => navigate(`/inventory/${_id}`)}
+                    className="block w-[150px] h-[35px] text-xl bg-orange-600 hover:bg-orange-700 hover:font-semibold text-white mx-auto mb-2 rounded-md"
+                >
+                    See Details
+                </button>
+                <button
+                    onClick={handleDelete}
+                    className="block w-[150px] h-[35px] text-xl bg-orange-600 hover:bg-orange-700 hover:font-semibold text-white mx-auto mb-2 rounded-md"
+                >
+                    Delete Item
+                </button>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {error ? "Error Occured!! Item not deleted" : ""}
+                </p>
+            </div>
         </div>
     );
 };

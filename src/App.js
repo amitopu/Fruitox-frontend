@@ -9,6 +9,7 @@ import Home from "./components/Home/Home";
 import Inventory from "./components/Inventory/Inventory";
 import Login from "./components/Login/Login";
 import ManageInventory from "./components/ManageInventory/ManageInventory";
+import NotFound from "./components/NotFound/NotFound";
 import PasswordReset from "./components/PasswordReset/PasswordReset";
 import Register from "./components/Register/Register";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
@@ -54,16 +55,21 @@ function App() {
                     ></Route>
                     <Route
                         path="inventory/:id"
-                        element={<Inventory></Inventory>}
+                        element={
+                            <RequireAuth>
+                                <Inventory></Inventory>
+                            </RequireAuth>
+                        }
                     ></Route>
                     <Route
-                        path="manageinventory"
+                        path="manageinventories"
                         element={
                             <RequireAuth>
                                 <ManageInventory></ManageInventory>
                             </RequireAuth>
                         }
                     ></Route>
+                    <Route path="*" element={<NotFound></NotFound>}></Route>
                 </Routes>
             </div>
         </userContext.Provider>

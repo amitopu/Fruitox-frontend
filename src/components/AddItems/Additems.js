@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../Spinner/Spinner";
 import useAddSingleItem from "../../Hooks/useAddSingleItem";
 
 const Additems = () => {
@@ -27,11 +26,9 @@ const Additems = () => {
         if (result.acknowledged) {
             navigate(`/inventory/${result.insertedId}`);
         } else if (Object.keys(result).length === 0) {
-            console.log("second");
             setAddError(false);
             setLoading(false);
         } else {
-            console.log("third");
             setAddError(true);
             setLoading(false);
         }

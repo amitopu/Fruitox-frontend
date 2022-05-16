@@ -8,7 +8,7 @@ import Header from "../Header/Header";
 
 const Inventory = () => {
     const { id } = useParams();
-    const [item] = useLoadSingleItem(id);
+    const item = useLoadSingleItem(id);
     const [stockFormError, setStockFormError] = useState(false);
     const [addToStockError, setAddToStockError] = useState(false);
     const [deliveryError, setDeliveryError] = useState(false);
@@ -32,7 +32,7 @@ const Inventory = () => {
     };
 
     const handleManageInventory = () => {
-        navigate("/manageinventory");
+        navigate("/manageinventories");
     };
 
     const handleDelivered = (id) => {
@@ -108,7 +108,7 @@ const Inventory = () => {
                         onClick={handleManageInventory}
                         className="w-full h-[40px] text-2xl bg-orange-600 text-white hover:bg-orange-700 hover:font-bold rounded-md mb-3"
                     >
-                        Manage Inventory
+                        Manage Inventories
                     </button>
                     <br />
                     <button
@@ -154,7 +154,7 @@ const Inventory = () => {
                     <div className="w-auto mx-auto my-3">
                         <img
                             className="h-[200px] w-[200px] rounded-md border-2 border-orange-600"
-                            src={`/${imageurl}`}
+                            src={`${imageurl}`}
                             alt=""
                         />
                         <p className="text-xl my-2">Item Id: {_id}</p>
@@ -184,7 +184,7 @@ const Inventory = () => {
                         </div>
                         <div className="flex flex-wrap justify-left my-3 mx-3">
                             <p className="text-xl ml-5 my-2">
-                                Initial Stock:{" "}
+                                Current Stock:{" "}
                                 <span className="font-semibold">
                                     {quantity} {unit}
                                 </span>
@@ -193,12 +193,6 @@ const Inventory = () => {
                                 Sold:{" "}
                                 <span className="font-semibold">
                                     {sold} {unit}
-                                </span>
-                            </p>
-                            <p className="text-xl ml-5 my-2">
-                                Remaining Stock:{" "}
-                                <span className="font-semibold">
-                                    {quantity} {unit}
                                 </span>
                             </p>
                         </div>
