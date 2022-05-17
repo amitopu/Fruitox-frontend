@@ -78,7 +78,7 @@ const Header = () => {
                         <Link to="/blog">Blog</Link>
                     </div>
                     <div className="mx-auto md:mr-5 font-bold text-black hover:font-extrabold  w-40 md:w-auto">
-                        <Link to="/about">About</Link>
+                        <Link to="/manageinventories">Manage Items</Link>
                     </div>
                     <div className="mx-auto md:mr-5 font-bold text-black hover:font-extrabold  w-40 md:w-auto">
                         {user ? (
