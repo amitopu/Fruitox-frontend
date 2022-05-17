@@ -10,6 +10,7 @@ import {
 } from "react-firebase-hooks/auth";
 import Spinner from "../Spinner/Spinner";
 import Footer from "../Footer/Footer";
+import Title from "../Title/Title";
 
 const Login = () => {
     // for form data and validation
@@ -218,6 +219,7 @@ const Login = () => {
                     {errorGoogle?.message}
                 </p>
             </div>
+            <Title></Title>
             <Footer></Footer>
         </>
     );

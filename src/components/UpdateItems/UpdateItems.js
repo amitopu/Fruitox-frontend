@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import useLoadSingleItem from "../../Hooks/useLoadSingleItem";
 // import axios from "axios";
 import { UpdateForm } from "./UpdateForm";
+import Title from "../Title/Title";
 
 const UpdateItems = () => {
     const { id } = useParams();
@@ -58,7 +59,7 @@ const UpdateItems = () => {
                     {error}
                 </p>
             )}
-
+            <Title></Title>
             <Footer></Footer>
         </>
     );

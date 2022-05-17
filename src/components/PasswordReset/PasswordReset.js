@@ -6,6 +6,7 @@ import auth from "../../firebase.init";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../Footer/Footer";
+import Title from "../Title/Title";
 
 const PasswordReset = () => {
     // hook call for form control
@@ -74,6 +75,7 @@ const PasswordReset = () => {
                     </p>
                 </form>
             </div>
+            <Title></Title>
             <Footer></Footer>
         </>
     );

@@ -26,7 +26,7 @@ const Header = () => {
         <div className="sticky top-0 z-10">
             <nav className="flex flex-wrap justify-between bg-orange-500 p-4 lg:px-16 md:px-8 h-16">
                 <div className="font-Macondo text-black font-semibold text-3xl italic sm:w-auto md:w-auto">
-                    Fruitox
+                    <Link to="/">Fruitox</Link>
                 </div>
 
                 <div

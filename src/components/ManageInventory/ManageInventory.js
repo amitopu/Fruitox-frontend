@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import SingleItem from "../SingleItem/SingleItem";
+import Title from "../Title/Title";
 
 const ManageInventory = () => {
     const [items, setItems] = useState([]);
@@ -113,7 +114,7 @@ const ManageInventory = () => {
                     <option value={20}>20</option>
                 </select>
             </div>
-
+            <Title></Title>
             <Footer></Footer>
         </>
     );

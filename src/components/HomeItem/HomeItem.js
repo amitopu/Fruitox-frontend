@@ -14,7 +14,7 @@ const HomeItem = ({ item }) => {
         quantity,
     } = item;
     return (
-        <div className="border-2 border-orange-600 rounded-xl">
+        <div className="border-2 border-orange-600 rounded-xl p-3">
             <div className="border-2 w-fit h-auto border-orange-600 rounded-md my-3 mx-auto">
                 <img
                     className="h-[100px] w-[100px] rounded-md"
@@ -42,7 +42,10 @@ const HomeItem = ({ item }) => {
                 </span>
             </p>
             <p>
-                About: <span className="font-semibold">{description}...</span>
+                About:{" "}
+                <span className="font-semibold">
+                    {description.slice(0, 81)}...
+                </span>
             </p>
             <button
                 onClick={() => navigate(`/inventory/${_id}`)}

@@ -10,6 +10,7 @@ import {
 import auth from "../../firebase.init";
 import Spinner from "../Spinner/Spinner";
 import Footer from "../Footer/Footer";
+import Title from "../Title/Title";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -150,6 +151,7 @@ const Register = () => {
                     {updateError?.message}
                 </p>
             </div>
+            <Title></Title>
             <Footer></Footer>
         </>
     );

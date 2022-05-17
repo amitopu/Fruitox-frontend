@@ -5,11 +5,12 @@ import Footer from "../Footer/Footer";
 import Freight from "../Freight/Freight";
 import Header from "../Header/Header";
 import ItemsSection from "../ItemsSection/ItemsSection";
+import Title from "../Title/Title";
 
 const Home = () => {
     return (
         <div>
-            {console.log("render")}
+            <Title></Title>
             <Header></Header>
             <Banner></Banner>
             <Features></Features>

@@ -5,6 +5,7 @@ import useLoadSingleItem from "../../Hooks/useLoadSingleItem";
 
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
+import Title from "../Title/Title";
 
 const Inventory = () => {
     const { id } = useParams();
@@ -220,6 +221,7 @@ const Inventory = () => {
                     {error}
                 </p>
             </div>
+            <Title></Title>
             <Footer></Footer>
         </>
     );

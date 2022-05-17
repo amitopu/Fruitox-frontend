@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
+import Title from "../Title/Title";
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ const NotFound = () => {
                     Don't Cry!!! Please go back to sweet home.
                 </button>
             </div>
+            <Title></Title>
             <Footer></Footer>
         </>
     );
