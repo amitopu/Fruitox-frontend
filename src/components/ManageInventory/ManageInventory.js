@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import SingleItem from "../SingleItem/SingleItem";
@@ -9,31 +10,54 @@ const ManageInventory = () => {
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     // getting desired number of items
     useEffect(() => {
         axios
             .get(`http://localhost:5000/items?page=${page}&size=${size}`)
-            .then((res) => setItems(res.data));
+            .then((res) => setItems(res.data))
+            .catch((err) => setError(err.message));
     }, [size, page]);
 
     // getting total number of items
     useEffect(() => {
-        axios.get("http://localhost:5000/itemscount").then((res) => {
-            const count = res.data.count;
-            const pages = Math.ceil(count / size);
-            setPageCount(pages);
-        });
+        axios
+            .get("http://localhost:5000/itemscount")
+            .then((res) => {
+                const count = res.data.count;
+                const pages = Math.ceil(count / size);
+                setPageCount(pages);
+            })
+            .catch((err) => setError(err.message));
     }, [size]);
 
     return (
         <>
             <Header></Header>
+            <div className="my-5 flex flex-wrap justify-center">
+                <button
+                    onClick={() => navigate("/additems")}
+                    className="w-56 h-[40px] text-lg bg-orange-600 hover:bg-orange-700 rounded-md hover:font-bold bolck my-2 md:my-5 mx-3 text-white"
+                >
+                    Add New Items
+                </button>
+                <button
+                    onClick={() => navigate("/myitems")}
+                    className="w-56 h-[40px] text-lg bg-orange-600 hover:bg-orange-700 rounded-md hover:font-bold bolck my-2 md:my-5 mx-3 text-white"
+                >
+                    My Items
+                </button>
+            </div>
             <div className="grid  lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 lg:mt-16 md:mt-12 mt-10 lg:px-16 md:px-8 px-4 mb-10">
                 {items.map((item) => (
                     <SingleItem key={item._id} item={item}></SingleItem>
                 ))}
             </div>
+            <p className="my-3 text-center text-red-600 font-bold">{error}</p>
+
+            {/* pagination section */}
             <div className="w-4/5 mx-auto flex justify-center mb-10">
                 <button
                     onClick={() => setPage(0)}

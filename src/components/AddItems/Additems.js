@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import useAddSingleItem from "../../Hooks/useAddSingleItem";
+import Spinner from "../Spinner/Spinner";
 
 const Additems = () => {
     const [addError, setAddError] = useState(false);
@@ -23,28 +24,35 @@ const Additems = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (result.acknowledged) {
-            navigate(`/inventory/${result.insertedId}`);
-        } else if (Object.keys(result).length === 0) {
-            setAddError(false);
-            setLoading(false);
-        } else {
+        try {
+            console.log("try");
+            if (result.acknowledged) {
+                navigate(`/inventory/${result.insertedId}`);
+            } else if (result && result.acknowledged !== false) {
+                setAddError(false);
+                setLoading(false);
+            } else {
+                setAddError(false);
+                setLoading(false);
+            }
+        } catch (err) {
             setAddError(true);
             setLoading(false);
         }
+        console.log(result);
     }, [result, navigate]);
 
     // for spinner
     if (loading) {
-        console.log(loading);
+        return <Spinner></Spinner>;
     }
 
     // for handling form submit
     const onSubmit = (data) => {
-        setItem(data);
         setAddError(false);
         console.log(item);
         setLoading(true);
+        setItem(data);
     };
 
     return (
@@ -82,7 +90,7 @@ const Additems = () => {
                     )}
 
                     {/* input for supplier Name  */}
-                    {/* <label className="text-xl ml-[11%]" htmlFor="email">
+                    <label className="text-xl ml-[11%]" htmlFor="email">
                         Supplier Name
                     </label>
                     <br />
@@ -105,7 +113,7 @@ const Additems = () => {
                         <p className="text-red-600 text-center warning mb-2">
                             {errors.supplierName.message}
                         </p>
-                    )} */}
+                    )}
 
                     {/* for description  */}
                     <label className="text-xl ml-[11%]" htmlFor="email">

@@ -3,6 +3,7 @@ import axios from "axios";
 
 const useLoadSingleItem = (index) => {
     const [item, setItem] = useState({});
+    const [error, setError] = useState("");
     const [id, setId] = useState(null);
 
     useEffect(() => {
@@ -10,11 +11,12 @@ const useLoadSingleItem = (index) => {
         if (id) {
             axios
                 .get(`http://localhost:5000/items/${id}`)
-                .then((res) => setItem(res.data));
+                .then((res) => setItem(res.data))
+                .catch((err) => setError(err.message));
         }
     }, [id, index]);
 
-    return item;
+    return [item, error];
 };
 
 export default useLoadSingleItem;

@@ -10,7 +10,7 @@ import { UpdateForm } from "./UpdateForm";
 const UpdateItems = () => {
     const { id } = useParams();
     // const navigate = useNavigate();
-    const item = useLoadSingleItem(id);
+    const [item, error] = useLoadSingleItem(id);
     // const [error, setError] = useState(false);
 
     // const {
@@ -54,7 +54,9 @@ const UpdateItems = () => {
             {Object.keys(item).length !== 0 ? (
                 <UpdateForm item={item}></UpdateForm>
             ) : (
-                <div>Loading</div>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {error}
+                </p>
             )}
 
             <Footer></Footer>

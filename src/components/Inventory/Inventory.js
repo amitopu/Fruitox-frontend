@@ -8,7 +8,7 @@ import Header from "../Header/Header";
 
 const Inventory = () => {
     const { id } = useParams();
-    const item = useLoadSingleItem(id);
+    const [item, error] = useLoadSingleItem(id);
     const [stockFormError, setStockFormError] = useState(false);
     const [addToStockError, setAddToStockError] = useState(false);
     const [deliveryError, setDeliveryError] = useState(false);
@@ -24,6 +24,7 @@ const Inventory = () => {
         quantity,
         imageurl,
         description,
+        manager,
     } = item;
 
     // handler for add item
@@ -195,6 +196,10 @@ const Inventory = () => {
                                     {sold} {unit}
                                 </span>
                             </p>
+                            <p className="text-xl ml-5 my-2">
+                                Manager:{" "}
+                                <span className="font-semibold">{manager}</span>
+                            </p>
                         </div>
                         <div className="flex flex-wrap justify-around my-3 mx-3">
                             <p className="text-xl ml-5 my-2">
@@ -210,6 +215,9 @@ const Inventory = () => {
                     {deliveryError
                         ? "Product not delivered!! Please try again later"
                         : ""}
+                </p>
+                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                    {error}
                 </p>
             </div>
             <Footer></Footer>

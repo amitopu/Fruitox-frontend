@@ -13,26 +13,33 @@ const SingleItem = (props) => {
         imageurl,
         unit,
         description,
+        manager,
     } = props.item;
     const [user] = useContext(userContext);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     // for handling delete button
-    const handleDelete = (_id) => {
-        if (user.displayName === supplierName) {
+    const handleDelete = (id) => {
+        console.log(_id);
+        if (user.displayName === manager || user.displayName === supplierName) {
             if (window.confirm("Do you really want to delete?")) {
                 axios
-                    .delete(`http://localhost:5000/delete/${_id}`)
+                    .delete(`http://localhost:5000/delete/${id}`)
                     .then((res) => {
-                        if (res.deleted) {
+                        if (res.data.deleted) {
                             navigate(0);
                         } else {
-                            setError(true);
+                            setError("Error Occured!! Item not deleted");
                         }
+                    })
+                    .catch((err) => {
+                        setError(err);
                     });
             }
         } else {
-            window.alert("Sorry!!! You are not the author of this item");
+            window.alert(
+                "Sorry!!! You are not the manager/supplier of this item"
+            );
         }
     };
 
@@ -46,6 +53,9 @@ const SingleItem = (props) => {
                 />
             </div>
             <p className="text-xl text-center my-2">Name: {itemName}</p>
+            <p className="text-xl text-center my-2">
+                Supplier name: {supplierName}
+            </p>
             <p className="text-xl text-center my-2">
                 Price: {price}$/{unit}
             </p>
@@ -63,13 +73,13 @@ const SingleItem = (props) => {
                     See Details
                 </button>
                 <button
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(_id)}
                     className="block w-[150px] h-[35px] text-xl bg-orange-600 hover:bg-orange-700 hover:font-semibold text-white mx-auto mb-2 rounded-md"
                 >
                     Delete Item
                 </button>
                 <p className="mt-2 text-center text-red-600 ml-2 font-bold">
-                    {error ? "Error Occured!! Item not deleted" : ""}
+                    {error}
                 </p>
             </div>
         </div>

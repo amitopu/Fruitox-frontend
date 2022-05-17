@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const UpdateForm = ({ item }) => {
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const { _id } = item;
     const {
@@ -39,17 +39,22 @@ export const UpdateForm = ({ item }) => {
     // for handling form submit
     const onSubmit = (data) => {
         console.log(data);
-        axios.put(`http://localhost:5000/item/${_id}`, data).then((res) => {
-            if (res.data.acknowledged && res.data.upsertedId) {
-                setError(false);
-                navigate(`/inventory/${res.data.upsertedId}`);
-            } else if (res.data.acknowledged) {
-                setError(false);
-                navigate(`/inventory/${_id}`);
-            } else {
-                setError(true);
-            }
-        });
+        axios
+            .put(`http://localhost:5000/item/${_id}`, data)
+            .then((res) => {
+                if (res.data.acknowledged && res.data.upsertedId) {
+                    setError("");
+                    navigate(`/inventory/${res.data.upsertedId}`);
+                } else if (res.data.acknowledged) {
+                    setError("");
+                    navigate(`/inventory/${_id}`);
+                } else {
+                    setError("Error!!! Item is not updated");
+                }
+            })
+            .catch((err) => {
+                setError(err.message);
+            });
     };
 
     return (
@@ -268,7 +273,7 @@ export const UpdateForm = ({ item }) => {
                 <br />
             </form>
             <p className="mt-2 text-center text-red-600 ml-2 font-bold">
-                {error ? "Something went wrong!! Please try again later" : ""}
+                {error}
             </p>
         </div>
     );
