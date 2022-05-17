@@ -27,7 +27,7 @@ const MyItems = () => {
                 })
                 .catch((err) => setError(err.message));
         }
-    }, [user]);
+    }, [user, size]);
 
     // getting desired number of items
     useEffect(() => {
@@ -110,7 +110,10 @@ const MyItems = () => {
                 </button>
                 <select
                     defaultValue={10}
-                    onChange={(e) => setSize(e.target.value)}
+                    onChange={(e) => {
+                        setSize(e.target.value);
+                        setPage(0);
+                    }}
                 >
                     <option value={5}>5</option>
                     <option value={10}>10</option>

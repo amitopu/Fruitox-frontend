@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
 
 export const UpdateForm = ({ item }) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [loading, setloading] = useState(false);
     const { _id } = item;
     const {
         itemName,
@@ -36,32 +38,43 @@ export const UpdateForm = ({ item }) => {
             description,
         },
     });
+
+    // for spinner to perform
+    if (loading) {
+        return <Spinner></Spinner>;
+    }
     // for handling form submit
     const onSubmit = (data) => {
         console.log(data);
         setError("");
+        setloading(true);
+
         axios
             .put(`http://localhost:5000/item/${_id}`, data)
             .then((res) => {
                 if (res.data.acknowledged && res.data.upsertedId) {
                     setError("");
+                    setloading(false);
                     navigate(`/inventory/${res.data.upsertedId}`);
                 } else if (res.data.acknowledged) {
                     setError("");
+                    setloading(false);
                     navigate(`/inventory/${_id}`);
                 } else {
                     setError("Error!!! Item is not updated");
+                    setloading(false);
                 }
             })
             .catch((err) => {
                 setError(err.message);
+                setloading(false);
             });
     };
 
     return (
         <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
             <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
-                Please Enter Item Details...
+                Update Item Details...
             </h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label className="text-xl ml-[11%]" htmlFor="email">

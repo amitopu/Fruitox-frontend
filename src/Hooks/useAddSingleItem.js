@@ -4,12 +4,16 @@ import auth from "../firebase.init";
 
 const useAddSingleItem = (item) => {
     const [result, setResult] = useState({});
+    const [loading, setLoading] = useState(false);
     const [user] = useAuthState(auth);
+    const [error, setError] = useState(false);
     const manager = user.displayName;
     const sold = 0;
 
     useEffect(() => {
         if (user && Object.keys(item).length !== 0) {
+            setLoading(true);
+            setError(false);
             const newItem = { ...item, manager, sold };
             fetch("http://localhost:5000/additem", {
                 method: "POST",
@@ -25,15 +29,20 @@ const useAddSingleItem = (item) => {
                         throw Error(res.statusText);
                     }
                 })
-                .then((res) => setResult(res))
+                .then((res) => {
+                    setLoading(false);
+                    return setResult(res);
+                })
                 .catch((error) => {
                     console.log("catch");
+                    setLoading(false);
+                    setError(true);
                     setResult(null);
                 });
         }
     }, [item, user, manager]);
 
-    return [result];
+    return [result, loading, error];
 };
 
 export default useAddSingleItem;

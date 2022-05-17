@@ -54,7 +54,7 @@ const UpdateItems = () => {
             {Object.keys(item).length !== 0 ? (
                 <UpdateForm item={item}></UpdateForm>
             ) : (
-                <p className="mt-2 text-center text-red-600 ml-2 font-bold">
+                <p className="my-2 text-center text-red-600 font-bold">
                     {error}
                 </p>
             )}

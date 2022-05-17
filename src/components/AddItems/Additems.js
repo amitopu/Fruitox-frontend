@@ -8,9 +8,9 @@ import Spinner from "../Spinner/Spinner";
 
 const Additems = () => {
     const [addError, setAddError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [item, setItem] = useState({});
-    let [result] = useAddSingleItem(item);
+    const [result, loading, error] = useAddSingleItem(item);
     // hook for form control
     const {
         register,
@@ -30,14 +30,14 @@ const Additems = () => {
                 navigate(`/inventory/${result.insertedId}`);
             } else if (result && result.acknowledged !== false) {
                 setAddError(false);
-                setLoading(false);
+                // setLoading(false);
             } else {
-                setAddError(false);
-                setLoading(false);
+                setAddError(true);
+                // setLoading(false);
             }
         } catch (err) {
             setAddError(true);
-            setLoading(false);
+            // setLoading(false);
         }
         console.log(result);
     }, [result, navigate]);
@@ -51,7 +51,7 @@ const Additems = () => {
     const onSubmit = (data) => {
         console.log(item);
         setAddError(false);
-        setLoading(true);
+        // setLoading(true);
         setItem(data);
     };
 
@@ -61,7 +61,7 @@ const Additems = () => {
             {console.log("render")}
             <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
-                    Please Enter Item Details...
+                    Enter New Item Details...
                 </h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <label className="text-xl ml-[11%]" htmlFor="email">
@@ -245,7 +245,7 @@ const Additems = () => {
                 </form>
 
                 <p className="mt-2 text-center text-red-600 ml-2 font-bold">
-                    {addError
+                    {addError || error
                         ? "Something went wrong!! Please try again later"
                         : ""}
                 </p>

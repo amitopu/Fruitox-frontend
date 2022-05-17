@@ -13,14 +13,6 @@ const ManageInventory = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    // getting desired number of items
-    useEffect(() => {
-        axios
-            .get(`http://localhost:5000/items?page=${page}&size=${size}`)
-            .then((res) => setItems(res.data))
-            .catch((err) => setError(err.message));
-    }, [size, page]);
-
     // getting total number of items
     useEffect(() => {
         axios
@@ -32,6 +24,14 @@ const ManageInventory = () => {
             })
             .catch((err) => setError(err.message));
     }, [size]);
+
+    // getting desired number of items
+    useEffect(() => {
+        axios
+            .get(`http://localhost:5000/items?page=${page}&size=${size}`)
+            .then((res) => setItems(res.data))
+            .catch((err) => setError(err.message));
+    }, [size, page]);
 
     return (
         <>
@@ -102,7 +102,10 @@ const ManageInventory = () => {
                 </button>
                 <select
                     defaultValue={10}
-                    onChange={(e) => setSize(e.target.value)}
+                    onChange={(e) => {
+                        setSize(e.target.value);
+                        setPage(0);
+                    }}
                 >
                     <option value={5}>5</option>
                     <option value={10}>10</option>
