@@ -10,7 +10,7 @@ const Additems = () => {
     const [addError, setAddError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [item, setItem] = useState({});
-    const result = useAddSingleItem(item);
+    let [result] = useAddSingleItem(item);
     // hook for form control
     const {
         register,
@@ -49,8 +49,8 @@ const Additems = () => {
 
     // for handling form submit
     const onSubmit = (data) => {
-        setAddError(false);
         console.log(item);
+        setAddError(false);
         setLoading(true);
         setItem(data);
     };

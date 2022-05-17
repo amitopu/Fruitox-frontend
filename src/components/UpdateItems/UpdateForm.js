@@ -39,6 +39,7 @@ export const UpdateForm = ({ item }) => {
     // for handling form submit
     const onSubmit = (data) => {
         console.log(data);
+        setError("");
         axios
             .put(`http://localhost:5000/item/${_id}`, data)
             .then((res) => {

@@ -27,12 +27,13 @@ const useAddSingleItem = (item) => {
                 })
                 .then((res) => setResult(res))
                 .catch((error) => {
+                    console.log("catch");
                     setResult(null);
                 });
         }
     }, [item, user, manager]);
 
-    return result;
+    return [result];
 };
 
 export default useAddSingleItem;
