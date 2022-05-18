@@ -5,7 +5,7 @@ import HomeItem from "../HomeItem/HomeItem";
 
 const ItemsSection = () => {
     const navigate = useNavigate();
-    const url = `http://localhost:5000/items?page=${0}&size=${6}`;
+    const url = `https://quiet-shore-21576.herokuapp.com/items?page=${0}&size=${6}`;
     const [items, error] = useLoadItems(url);
 
     return (

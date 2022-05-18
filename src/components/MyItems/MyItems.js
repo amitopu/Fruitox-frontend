@@ -20,7 +20,9 @@ const MyItems = () => {
     useEffect(() => {
         if (user) {
             axios
-                .get(`http://localhost:5000/itemscount/${user.displayName}`)
+                .get(
+                    `https://quiet-shore-21576.herokuapp.com/itemscount/${user.displayName}`
+                )
                 .then((res) => {
                     const count = res.data.count;
                     const pages = Math.ceil(count / size);
@@ -35,7 +37,7 @@ const MyItems = () => {
         if (user) {
             axios
                 .get(
-                    `http://localhost:5000/items/user/${user.displayName}?page=${page}&size=${size}`
+                    `https://quiet-shore-21576.herokuapp.com/items/user/${user.displayName}?page=${page}&size=${size}`
                 )
                 .then((res) => setItems(res.data))
                 .catch((err) => setError(err.message));

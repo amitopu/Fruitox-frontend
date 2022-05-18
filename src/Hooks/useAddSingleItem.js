@@ -15,7 +15,7 @@ const useAddSingleItem = (item) => {
             setLoading(true);
             setError(false);
             const newItem = { ...item, manager, sold };
-            fetch("http://localhost:5000/additem", {
+            fetch("https://quiet-shore-21576.herokuapp.com/additem", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

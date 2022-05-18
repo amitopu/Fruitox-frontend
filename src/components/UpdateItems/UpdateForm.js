@@ -50,7 +50,7 @@ export const UpdateForm = ({ item }) => {
         setloading(true);
 
         axios
-            .put(`http://localhost:5000/item/${_id}`, data)
+            .put(`https://quiet-shore-21576.herokuapp.com/item/${_id}`, data)
             .then((res) => {
                 if (res.data.acknowledged && res.data.upsertedId) {
                     setError("");

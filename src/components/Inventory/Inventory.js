@@ -45,7 +45,7 @@ const Inventory = () => {
             sold: newSold,
             quantity: newQuantity,
         };
-        const url = `http://localhost:5000/delivered/${_id}`;
+        const url = `https://quiet-shore-21576.herokuapp.com/delivered/${_id}`;
         if (newQuantity >= 0) {
             axios.put(url, data).then((res) => {
                 if (res.data.acknowledged && res.data.upsertedId) {
@@ -65,7 +65,7 @@ const Inventory = () => {
     const handleAddToStock = (event) => {
         event.preventDefault();
         const newStock = parseInt(event.target.restock.value);
-        const url = `http://localhost:5000/delivered/${_id}`;
+        const url = `https://quiet-shore-21576.herokuapp.com/delivered/${_id}`;
         if (newStock <= 0) {
             setStockFormError(true);
         } else {

@@ -10,7 +10,7 @@ const useLoadSingleItem = (index) => {
         setId(index);
         if (id) {
             axios
-                .get(`http://localhost:5000/items/${id}`)
+                .get(`https://quiet-shore-21576.herokuapp.com/items/${id}`)
                 .then((res) => setItem(res.data))
                 .catch((err) => setError(err.message));
         }
