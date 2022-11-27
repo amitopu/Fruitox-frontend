@@ -26,7 +26,7 @@ const UpdateItems = () => {
     // // for handling form submit
     // const onSubmit = (data) => {
     //     console.log(data);
-    //     axios.put(`https://quiet-shore-21576.herokuapp.com/item/${id}`, data).then((res) => {
+    //     axios.put(`https://fruitox.onrender.com/item/${id}`, data).then((res) => {
     //         if (res.data.acknowledged && res.data.upsertedId) {
     //             setError(false);
     //             navigate(`/inventory/${res.data.upsertedId}`);

@@ -17,7 +17,7 @@ const ManageInventory = () => {
     // getting total number of items
     useEffect(() => {
         axios
-            .get("https://quiet-shore-21576.herokuapp.com/itemscount")
+            .get("https://fruitox.onrender.com/itemscount")
             .then((res) => {
                 const count = res.data.count;
                 const pages = Math.ceil(count / size);
@@ -29,9 +29,7 @@ const ManageInventory = () => {
     // getting desired number of items
     useEffect(() => {
         axios
-            .get(
-                `https://quiet-shore-21576.herokuapp.com/items?page=${page}&size=${size}`
-            )
+            .get(`https://fruitox.onrender.com/items?page=${page}&size=${size}`)
             .then((res) => setItems(res.data))
             .catch((err) => setError(err.message));
     }, [size, page]);

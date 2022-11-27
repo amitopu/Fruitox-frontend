@@ -24,9 +24,7 @@ const SingleItem = (props) => {
         if (user.displayName === manager || user.displayName === supplierName) {
             if (window.confirm("Do you really want to delete?")) {
                 axios
-                    .delete(
-                        `https://quiet-shore-21576.herokuapp.com/delete/${id}`
-                    )
+                    .delete(`https://fruitox.onrender.com/delete/${id}`)
                     .then((res) => {
                         if (res.data.deleted) {
                             navigate(0);

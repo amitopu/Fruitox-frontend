@@ -21,7 +21,7 @@ const MyItems = () => {
         if (user) {
             axios
                 .get(
-                    `https://quiet-shore-21576.herokuapp.com/itemscount/${user.displayName}`
+                    `https://fruitox.onrender.com/itemscount/${user.displayName}`
                 )
                 .then((res) => {
                     const count = res.data.count;
@@ -37,7 +37,7 @@ const MyItems = () => {
         if (user) {
             axios
                 .get(
-                    `https://quiet-shore-21576.herokuapp.com/items/user/${user.displayName}?page=${page}&size=${size}`
+                    `https://fruitox.onrender.com/items/user/${user.displayName}?page=${page}&size=${size}`
                 )
                 .then((res) => setItems(res.data))
                 .catch((err) => setError(err.message));

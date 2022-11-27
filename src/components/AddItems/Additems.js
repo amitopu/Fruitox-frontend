@@ -58,13 +58,13 @@ const Additems = () => {
     return (
         <>
             <Header></Header>
-            {console.log("render")}
+            {/* {console.log("render")} */}
             <div className="md:w-1/2 w-3/4 mx-auto h border-4 border-orange-600 rounded-lg mt-16 mb-10">
                 <h1 className="text-2xl mt-5 mb-2 p-5 text-center">
                     Enter New Item Details...
                 </h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <label className="text-xl ml-[11%]" htmlFor="email">
+                    <label className="text-xl ml-[11%]" htmlFor="itemName">
                         Item Name
                     </label>
                     <br />
@@ -90,7 +90,7 @@ const Additems = () => {
                     )}
 
                     {/* input for supplier Name  */}
-                    <label className="text-xl ml-[11%]" htmlFor="email">
+                    <label className="text-xl ml-[11%]" htmlFor="supplierName">
                         Supplier Name
                     </label>
                     <br />
@@ -116,7 +116,7 @@ const Additems = () => {
                     )}
 
                     {/* for description  */}
-                    <label className="text-xl ml-[11%]" htmlFor="email">
+                    <label className="text-xl ml-[11%]" htmlFor="description">
                         Description
                     </label>
                     <br />
@@ -140,7 +140,7 @@ const Additems = () => {
                         </p>
                     )}
                     {/* for imgae url  */}
-                    <label className="text-xl ml-[11%]" htmlFor="email">
+                    <label className="text-xl ml-[11%]" htmlFor="imageurl">
                         Image Url
                     </label>
                     <br />
@@ -161,7 +161,7 @@ const Additems = () => {
                     )}
 
                     {/* input for price  */}
-                    <label className="text-xl ml-[11%]" htmlFor="email">
+                    <label className="text-xl ml-[11%]" htmlFor="price">
                         Price/Unit
                     </label>
                     <br />
@@ -186,7 +186,10 @@ const Additems = () => {
                     {/* for quantity */}
                     <div className="grid grid-cols-2 gap-2 w-4/5 mx-auto">
                         <div>
-                            <label className="text-xl ml-[11%]" htmlFor="email">
+                            <label
+                                className="text-xl ml-[11%]"
+                                htmlFor="quantity"
+                            >
                                 Quantity
                             </label>
                             <br />
@@ -211,7 +214,7 @@ const Additems = () => {
                         </div>
 
                         <div>
-                            <label className="text-xl ml-[11%]" htmlFor="email">
+                            <label className="text-xl ml-[11%]" htmlFor="unit">
                                 Unit
                             </label>
                             <br />
